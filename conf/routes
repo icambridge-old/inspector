@@ -4,6 +4,12 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /blog/?                       controllers.Blog.index
+GET     /blog/:slug                 controllers.Blog.post(slug)
+GET       /admin/blog/?             controllers.Blog.index
+GET     /admin/blog/edit/:slug      controllers.Blog.edit(slug)
+GET     /admin/blog/new             controllers.Blog.create
+POST     /admin/blog/save           controllers.Blog.save
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,12 @@
+@(posts: Seq[entities.Post])
+
+@main("Latest posts") {
+
+    @posts.map { post =>
+
+        <h2>@post.title</h2>
+        @post.excerpt
+
+    }
+
+}

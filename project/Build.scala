@@ -10,11 +10,15 @@ object ApplicationBuild extends Build {
     val appDependencies = Seq(
       // Add your project dependencies here,
 
-      "mysql" % "mysql-connector-java" % "5.1.18"
+      "mysql" % "mysql-connector-java" % "5.1.18",
+      "com.twitter" %% "querulous-core" % "2.7.0"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here      
+      resolvers += "Scala tools releases" at "https://oss.sonatype.org/content/groups/scala-tools/",
+      resolvers += "Twitter's cool stuff" at "http://maven.twttr.com/" +
+        ""
     )
+
 
 }

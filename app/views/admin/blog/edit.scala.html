@@ -1,0 +1,24 @@
+@(form: Form[entities.Post])
+@import helper.twitterBootstrap._
+
+@admin.main("Admin") {
+
+    @helper.form(action = routes.Blog.save) {
+
+
+           <input type="hidden" value="@form("id").value" name="id" />
+
+        @helper.inputText(form("title"))
+
+        @helper.inputText(form("slug"))
+
+@helper.textarea(form("body"))
+
+@helper.textarea(form("posted"))
+
+@helper.textarea(form("excerpt"))
+
+        <input type="submit" value="Save" />
+    }
+
+}
