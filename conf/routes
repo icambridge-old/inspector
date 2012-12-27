@@ -4,12 +4,20 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /blog/?                       controllers.Blog.index
+
+# Blog
+GET     /blog/?                     controllers.Blog.index
 GET     /blog/:slug                 controllers.Blog.post(slug)
-GET       /admin/blog/?             controllers.Blog.index
+GET     /admin/blog/?               controllers.Blog.index
 GET     /admin/blog/edit/:slug      controllers.Blog.edit(slug)
 GET     /admin/blog/new             controllers.Blog.create
-POST     /admin/blog/save           controllers.Blog.save
+POST    /admin/blog/save            controllers.Blog.save
+
+# Users
+GET     /admin/user/create          controllers.Admin.create
+POST    /admin/user/save            controllers.Admin.save
+GET     /admin/user/login           controllers.Admin.login
+POST    /admin/user/process         controllers.Admin.process
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

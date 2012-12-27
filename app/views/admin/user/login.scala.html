@@ -1,0 +1,28 @@
+@(form: Form[(String, String)])
+@import helper.twitterBootstrap._
+
+@admin.main("Admin") {
+
+@helper.form(action = routes.Admin.process) {
+
+
+        <input type="hidden" value="@form("id").value" name="id" />
+        @form.errors
+        @helper.inputText(form("username"))
+
+        <div class="clearfix  " id="password_field">
+            <label for="password">password</label>
+            <div class="input">
+
+                <input type="password" id="password" name="password" value="" >
+
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+
+<input type="submit" value="login" />
+}
+
+}

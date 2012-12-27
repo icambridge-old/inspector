@@ -18,7 +18,7 @@ object Blog extends Controller {
       "title" -> nonEmptyText,
       "body" -> nonEmptyText,
       "expcert" -> optional(text),
-      "slug" -> nonEmptyText,
+      "slug" -> nonEmptyText,  // TODO make optional
       "posted" -> optional(text),
       "id" -> optional(number)
     )(Post.apply)(Post.unapply) )

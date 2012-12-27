@@ -1,0 +1,18 @@
+@(form: Form[entities.User])
+@import helper.twitterBootstrap._
+
+@admin.main("Admin") {
+
+    @helper.form(action = routes.Admin.save) {
+
+
+        <input type="hidden" value="@form("id").value" name="id" />
+
+        @helper.inputText(form("username"))
+
+        @helper.inputText(form("password"))
+
+        <input type="submit" value="Save" />
+    }
+
+}
