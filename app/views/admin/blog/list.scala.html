@@ -1,6 +1,6 @@
-@(posts: Seq[entities.Post])
+@(posts: Seq[entities.Post], username: String)
 
-@admin.main("Latest posts") {
+@admin.main("Latest posts", username) {
 
     @posts.map { post =>
 

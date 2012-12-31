@@ -1,0 +1,12 @@
+@(pages: Seq[entities.Page], username: String)
+
+@admin.main("Latest Pages", username) {
+
+    @pages.map { page =>
+
+        <h2>@page.title</h2>
+        @page.body
+
+    }
+
+}

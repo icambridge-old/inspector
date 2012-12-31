@@ -8,25 +8,33 @@ import play.api.data.validation.Constraints._
 
 import models.Posts
 import entities.Post
+import util.Location
 
 object Blog extends Controller {
 
   val postModel = new Posts
+
 
   val postForm = Form(
     mapping(
       "title" -> nonEmptyText,
       "body" -> nonEmptyText,
       "expcert" -> optional(text),
-      "slug" -> nonEmptyText,  // TODO make optional
+      "slug" -> nonEmptyText, // TODO make optional
       "posted" -> optional(text),
       "id" -> optional(number)
-    )(Post.apply)(Post.unapply) )
+    )(Post.apply)(Post.unapply))
 
-  def index = Action {
-          //s
-    val posts = postModel.getLatest
-    Ok(views.html.blog.index(posts))
+  Location.set("Blog")
+
+  def index = page("1")
+
+
+  def page(pageNumStr: String) = Action { request =>
+    val pageNum: Int = pageNumStr.toInt
+    val posts = postModel.getLatest(pageNum)
+    val postCount = postModel.getPageCount
+    Ok(views.html.blog.index(posts, pageNum,postCount))
   }
 
   def post(slug: String) = Action {
@@ -35,48 +43,9 @@ object Blog extends Controller {
 
     blogPostOption match {
       case Some(blogPost) => Ok(views.html.blog.post(blogPost))
-      case None           => Ok(views.html.blog.notfound())
+      case None => Ok(views.html.blog.notfound())
     }
 
   }
 
-  def create = Action {
-
-    Ok(views.html.admin.blog.edit(postForm))
-
-  }
-
-  def edit(slug: String) = Action {
-
-    val blogPostOption = postModel.getPost(slug)
-
-    blogPostOption match {
-      case Some(blogPost) => {
-        val filled = postForm.fill(blogPost)
-        Ok(views.html.admin.blog.edit(filled))
-      }
-      case None           => Ok(views.html.blog.notfound())
-    }
-
-  }
-
- def save = Action { implicit request =>
-
-  val result = postForm.bindFromRequest.fold(
-      {formFail => Ok(views.html.admin.blog.edit(formFail))},
-      {post => postModel.save(post);Ok(views.html.blog.post(post)) }
-  )
-
-  result
- }
-
-  def formFailure(form: Form[Post]) = {
-    println("Failure")
-    println(form.hasErrors)
-
-  }
-
-  def formSuccess(post: Post) = {
-    Ok(views.html.blog.post(post))
-  }
 }

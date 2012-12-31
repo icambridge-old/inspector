@@ -6,12 +6,24 @@
 GET     /                           controllers.Application.index
 
 # Blog
-GET     /blog/?                     controllers.Blog.index
-GET     /blog/:slug                 controllers.Blog.post(slug)
-GET     /admin/blog/?               controllers.Blog.index
-GET     /admin/blog/edit/:slug      controllers.Blog.edit(slug)
-GET     /admin/blog/new             controllers.Blog.create
-POST    /admin/blog/save            controllers.Blog.save
+GET     /blog                       controllers.Blog.index
+GET     /blog/page/:pageNum         controllers.Blog.page(pageNum)
+GET     /blog/view/:slug            controllers.Blog.post(slug)
+# Admin Blog
+GET     /admin/blog                 controllers.backend.Blog.list
+GET     /admin/blog/edit/:slug      controllers.backend.Blog.edit(slug)
+GET     /admin/blog/new             controllers.backend.Blog.create
+POST    /admin/blog/save            controllers.backend.Blog.save
+
+# Admin Page
+
+GET     /admin/pages                 controllers.backend.Page.list
+GET     /admin/pages/edit/:slug      controllers.backend.Page.edit(slug)
+GET     /admin/pages/new             controllers.backend.Page.create
+POST    /admin/pages/save            controllers.backend.Page.save
+
+
+GET     /admin/                     controllers.Admin.index
 
 # Users
 GET     /admin/user/create          controllers.Admin.create
@@ -21,3 +33,8 @@ POST    /admin/user/process         controllers.Admin.process
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+#Page
+
+GET     /:slug                      controllers.Page.page(slug)

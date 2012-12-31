@@ -3,31 +3,61 @@ package models
 
 import entities.Post
 
+import java.text.SimpleDateFormat
+
 class Posts extends Connection {
 
-  def getLatest: Seq[Post] = {
+  protected[this] var pageCount = 1
 
-    val posts: Seq[Post] = queryEvaluator.select("SELECT * FROM posts ORDER BY `id` DESC") { row =>
+  def getPageCount = pageCount
+
+
+  def getLatest(pageNumber: Int): Seq[Post] = {
+
+    // TODO change to application configuration
+    val limitCount = 5
+    val startingPoint = limitCount * (pageNumber - 1)
+
+    val posts: Seq[Post] = queryEvaluator.select(
+          "SELECT SQL_CALC_FOUND_ROWS * FROM posts ORDER BY `id` DESC LIMIT "+startingPoint+","+limitCount) { row =>
+
+      val format       = new SimpleDateFormat("dd-MM-yyyy")
+      val date         = row.getTimestamp("posted")
+      val formatedDate = format.format(date)
+
       new Post(
         title = row.getString("title"),
         body = row.getString("body"),
         excerpt = Some(row.getString("excerpt")),
-        posted = Some(row.getString("posted")),
+        posted = Some(formatedDate),
         slug = row.getString("slug"),
         id = Some(row.getInt("id"))
       )
     }
+
+    val pageCountOption = queryEvaluator.selectOne("SELECT FOUND_ROWS()") { row =>
+      row.getInt(1)
+    }
+
+    val  postCount = pageCountOption.getOrElse(1)
+    pageCount = if ((postCount % limitCount) == 0) { postCount / limitCount } else { (postCount / limitCount) + 1 }
+
     posts
   }
 
 
   def getPost(slug: String) = {
     val post = queryEvaluator.selectOne("SELECT * FROM posts WHERE slug = ? ORDER BY `id` DESC", slug) { row =>
+
+      val format       = new SimpleDateFormat("dd-MM-yyyy")
+      val date         = row.getTimestamp("posted")
+      val formatedDate = format.format(date)
+
       new Post(
         title = row.getString("title"),
         body = row.getString("body"),
         excerpt = Some(row.getString("excerpt")),
-        posted = Some(row.getString("posted")),
+        posted = Some(formatedDate),
         slug = row.getString("slug"),
         id = Some(row.getInt("id"))
       )

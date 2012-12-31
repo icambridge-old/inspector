@@ -1,0 +1,7 @@
+@(pageNum: Int, pageCount: Int)
+
+<ul>
+    @for(i <- (1).to(pageCount)) {
+    <li><a href="@routes.Blog.page(i.toString)"@if(pageNum == i){ class="current"}>@i</a></li>
+    }
+</ul>

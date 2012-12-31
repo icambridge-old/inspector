@@ -30,23 +30,35 @@ object Admin extends Controller {
 
 
 
-  def index = Action {
-
-    Ok(views.html.index("Admin index"))
+  def index = Action { request =>
+    request.session.get("username").map { user =>
+      Ok(views.html.admin.index("Admin index", user))
+    }.getOrElse {
+      Unauthorized("Oops, you are not connected")
+    }
   }
 
-  def create = Action {
-
-    Ok(views.html.admin.user.create(userCreateForm))
+  def create = Action { request =>
+    request.session.get("username").map { user =>
+      Ok(views.html.admin.user.create(userCreateForm, user))
+    }.getOrElse {
+      Unauthorized("Oops, you are not connected")
+    }
   }
 
   def save = Action { implicit request =>
-    val result = userCreateForm.bindFromRequest.fold(
-    {formFail => Ok(views.html.admin.user.create(formFail))},
+    request.session.get("username").map { user =>
+
+      val result = userCreateForm.bindFromRequest.fold(
+    {formFail => Ok(views.html.admin.user.create(formFail, user))},
     {user => userModel.save(user);Ok(views.html.index("Success")) }
     )
 
     result
+
+  }.getOrElse {
+    Unauthorized("Oops, you are not connected")
+  }
   }
 
   def login = Action {
@@ -57,7 +69,7 @@ object Admin extends Controller {
     implicit request =>
       val result = userLoginForm.bindFromRequest.fold(
       {formFail => Ok(views.html.admin.user.login(formFail))},
-      {user => Ok(views.html.index("Success")) }
+      {user => Redirect(routes.Admin.index).withSession("username" -> user._1) }
       )
 
       result

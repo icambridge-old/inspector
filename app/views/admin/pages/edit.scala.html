@@ -1,19 +1,18 @@
-@(form: Form[entities.Post], username: String)
+@(form: Form[entities.Page], username: String)
 @import helper.twitterBootstrap._
 
 @admin.main("Admin", username) {
 
-    @helper.form(action = controllers.backend.routes.Blog.save) {
+    @helper.form(action = controllers.backend.routes.Page.save) {
 
 
-        <input type="hidden" value="@form("id").value" name="id" />
+           <input type="hidden" value="@form("id").value" name="id" />
 
         @helper.inputText(form("title"))
 
         @helper.inputText(form("slug"))
 
         @helper.textarea(form("body"))
-
 
         <input type="submit" value="Save" />
     }

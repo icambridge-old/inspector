@@ -1,6 +1,8 @@
-@(post: entities.Post)
+@(page: entities.Page)
 
-@main("Latest posts") {
+@main(page.title) {
 
-    <h2>@post.title</h2>
+    <div class="title"><h2>@page.title</h2></div>
+
+    @Html(page.body)
 }

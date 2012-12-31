@@ -1,15 +1,72 @@
 @(title: String)(content: Html)
-
+@import util.Location
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    </head>
-    <body>
-        @content
-    </body>
+<head>
+    <title>@title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="@routes.Assets.at("css/reset.css")" type="text/css" />
+    <link rel="stylesheet" href="@routes.Assets.at("css/default.css")" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script src="@routes.Assets.at("js/jquery-1.5.2.min.js")" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+
+<div id="smallheader">						<!-- Start of Header Part !-->
+    <div class="wrapper">
+
+        <div id="logo">
+            <img src="@routes.Assets.at("images/name2.png")" width="213" height="49" alt="your name" class="png"/>
+        </div>
+
+        <div id="right">
+            <form method="get" id="searchform" action="#">
+                <fieldset class="search">
+                    <input type="text" class="box" />
+                    <button class="btn" title="Search">Search</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>										<!-- End of Header Part !-->
+
+<div id="contentpart">								<!-- Start of Content Part !-->
+    <div class="wrapper">
+
+        <ul class="menu">							<!-- This is the menu !-->
+            <li><a href="index.html">Home</a></li>
+            <li @if(Location.isCurrentPage("Blog")) { class="current" }><a href="@routes.Blog.index">Blog</a></li>
+            <li @if(Location.isCurrentPage("About")) { class="current" }><a href="@routes.Page.page("about")">About</a></li>
+            <li @if(Location.isCurrentPage("Contact")) { class="current" }><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div id="content">
+
+            <div id="main" class="news">
+                @content
+            </div>								<!-- End Main Content !-->
+
+            <div id="sidebar">					<!-- Start of Sidebar !-->
+                <ul class="sidemenu">
+                    <li><a href="#">Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Archive</a></li>
+                    <li><a href="#">News Feeds</a></li>
+                </ul>
+            </div>								<!-- End of Sidebar !-->
+
+        </div>
+
+        <div style="clear:both;"></div>
+
+        <div id="bottom">					<!-- This is the Footer !-->
+            <p class="footer">Copyright © 2012 Iain Cambridge. All Rights Reserved.</p>
+        </div>
+
+    </div>
+</div>										<!-- End of Content Part !-->
+</body>
 </html>

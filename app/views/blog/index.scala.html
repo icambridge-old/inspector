@@ -1,12 +1,20 @@
-@(posts: Seq[entities.Post])
+@(posts: Seq[entities.Post], pageNum: Int, pageCount: Int)
 
 @main("Latest posts") {
 
+    <h2>Blog</h2>
+    <hr />
+
     @posts.map { post =>
 
-        <h2>@post.title</h2>
+        <h3>@post.title</h3>
+        <h5>Posted at @post.posted by Iain</h5>
+        <br />
         @post.excerpt
-
+        <br />
+        <hr />
     }
 
+   Total Posts @pageCount
+   @partial.pagination(pageNum, pageCount)
 }

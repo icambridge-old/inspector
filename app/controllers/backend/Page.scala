@@ -6,23 +6,20 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 
-import models.Posts
-import entities.Post
+import models.Pages
 import util.Location
 
-object Blog extends Controller {
+object Page extends Controller {
 
-  val postModel = new Posts
+  val pageModel = new Pages
 
-  val postForm = Form(
+  val pageForm = Form(
     mapping(
       "title" -> nonEmptyText,
       "body" -> nonEmptyText,
-      "expcert" -> optional(text),
       "slug" -> nonEmptyText, // TODO make optional
-      "posted" -> optional(text),
       "id" -> optional(number)
-    )(Post.apply)(Post.unapply))
+    )(entities.Page.apply)(entities.Page.unapply))
 
   Location.set("Blog")
 
@@ -30,8 +27,8 @@ object Blog extends Controller {
     request =>
       request.session.get("username").map {
         user =>
-          val posts = postModel.getLatest(1)
-          Ok(views.html.admin.blog.list(posts, user))
+          val pages = pageModel.getAll
+          Ok(views.html.admin.pages.list(pages, user))
       }.getOrElse {
         Unauthorized("Oops, you are not connected")
       }
@@ -41,7 +38,7 @@ object Blog extends Controller {
     request =>
       request.session.get("username").map {
         user =>
-          Ok(views.html.admin.blog.edit(postForm, user))
+          Ok(views.html.admin.pages.edit(pageForm, user))
       }.getOrElse {
         Unauthorized("Oops, you are not connected")
       }
@@ -52,12 +49,12 @@ object Blog extends Controller {
       request.session.get("username").map {
         user =>
 
-          val blogPostOption = postModel.getPost(slug)
+          val pageOption = pageModel.getPage(slug)
 
-          blogPostOption match {
-            case Some(blogPost) => {
-              val filled = postForm.fill(blogPost)
-              Ok(views.html.admin.blog.edit(filled, user))
+          pageOption match {
+            case Some(page) => {
+              val filled = pageForm.fill(page)
+              Ok(views.html.admin.pages.edit(filled, user))
             }
             case None => Ok(views.html.blog.notfound())
           }
@@ -73,11 +70,11 @@ object Blog extends Controller {
       request.session.get("username").map {
         user =>
 
-          val result = postForm.bindFromRequest.fold(
+          val result = pageForm.bindFromRequest.fold(
           {
-            formFail => Ok(views.html.admin.blog.edit(formFail, user))
+            formFail => Ok(views.html.admin.pages.edit(formFail, user))
           }, {
-            post => postModel.save(post); Ok(views.html.blog.post(post))
+            page => pageModel.save(page); Ok(views.html.page.view(page))
           }
           )
 

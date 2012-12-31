@@ -9,8 +9,6 @@ object Application extends Controller {
   
   def index = Action {
 
-    val postModel = new Posts
-    val posts = postModel.getLatest
     Ok(views.html.index("Your new application is ready!"))
   }
   

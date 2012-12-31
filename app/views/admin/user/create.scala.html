@@ -1,7 +1,7 @@
-@(form: Form[entities.User])
+@(form: Form[entities.User], username: String)
 @import helper.twitterBootstrap._
 
-@admin.main("Admin") {
+@admin.main("Admin", username) {
 
     @helper.form(action = routes.Admin.save) {
 
