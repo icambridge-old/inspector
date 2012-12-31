@@ -11,7 +11,8 @@ GET     /blog/page/:pageNum         controllers.Blog.page(pageNum)
 GET     /blog/view/:slug            controllers.Blog.post(slug)
 # Admin Blog
 GET     /admin/blog                 controllers.backend.Blog.list
-GET     /admin/blog/edit/:slug      controllers.backend.Blog.edit(slug)
+GET     /admin/blog/page/:pageNum   controllers.backend.Blog.page(pageNum)
+GET     /admin/blog/edit/:id        controllers.backend.Blog.edit(id)
 GET     /admin/blog/new             controllers.backend.Blog.create
 POST    /admin/blog/save            controllers.backend.Blog.save
 

@@ -1,9 +1,9 @@
 @(form: Form[(String, String)])
 @import helper.twitterBootstrap._
 
-@admin.main("Admin", "") {
+@admin.login("Admin") {
 
-@helper.form(action = routes.Admin.process) {
+@helper.form(action = routes.Admin.process, args = 'class -> "form-signin") {
 
 
         <input type="hidden" value="@form("id").value" name="id" />
@@ -21,8 +21,7 @@
             </div>
         </div>
 
-
-<input type="submit" value="login" />
+<button class="btn btn-large btn-primary" type="submit">Sign in</button>
 }
 
 }

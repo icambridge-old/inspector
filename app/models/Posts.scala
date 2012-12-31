@@ -74,6 +74,28 @@ class Posts extends Connection {
     post
   }
 
+  def getPostById(id: Int) = {
+    val post = queryEvaluator.selectOne("SELECT * FROM posts WHERE id = ? ORDER BY `id` DESC", id) {
+      row =>
+
+        val format = new SimpleDateFormat("dd-MM-yyyy")
+        val date = row.getTimestamp("posted")
+        val formatedDate = format.format(date)
+
+        new Post(
+          title = row.getString("title"),
+          body = row.getString("body"),
+          excerpt = Some(row.getString("excerpt")),
+          posted = Some(formatedDate),
+          slug = row.getString("slug"),
+          id = Some(row.getInt("id"))
+        )
+    }
+
+
+    post
+  }
+
   def save(post: Post) = {
 
     val regex = "[^A-Za-z0-9\\s-]".r

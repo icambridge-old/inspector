@@ -34,8 +34,8 @@ object Blog extends Controller {
     request =>
       val pageNum: Int = pageNumStr.toInt
       val posts = postModel.getLatest(pageNum)
-      val postCount = postModel.getPageCount
-      Ok(views.html.blog.index(posts, pageNum, postCount))
+      val pageCount = postModel.getPageCount
+      Ok(views.html.blog.index(posts, pageNum, pageCount))
   }
 
   def post(slug: String) = Action {

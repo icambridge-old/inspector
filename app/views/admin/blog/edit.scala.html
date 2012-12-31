@@ -8,11 +8,11 @@
 
         <input type="hidden" value="@form("id").value" name="id" />
 
-        @helper.inputText(form("title"))
+        @helper.inputText(form("title"), args = 'size -> 75, 'placeholder -> "title")
 
-        @helper.inputText(form("slug"))
+        @helper.inputText(form("slug"), args = 'size -> 75, 'placeholder -> "Slug")
 
-        @helper.textarea(form("body"))
+        @helper.textarea(form("body"), args = 'rows -> 12, 'cols -> 50)
 
 
         <input type="submit" value="Save" />

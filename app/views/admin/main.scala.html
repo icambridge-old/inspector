@@ -18,6 +18,9 @@
         .sidebar-nav {
             padding: 9px 0;
         }
+        input,textarea, .uneditable-input {
+            width: 550px;
+        }
     </style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -65,8 +68,11 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header">Blogs</li>
-                    <li class="active"><a href="@controllers.backend.routes.Blog.list">List</a></li>
+                    <li><a href="@controllers.backend.routes.Blog.list">List</a></li>
                     <li><a href="@controllers.backend.routes.Blog.create">New</a></li>
+                    <li class="nav-header">Pages</li>
+                    <li><a href="@controllers.backend.routes.Page.list">List</a></li>
+                    <li><a href="@controllers.backend.routes.Page.create">New</a></li>
                     <li class="nav-header">Users</li>
                     <li><a href="@routes.Admin.create">Create</a></li>
                 </ul>

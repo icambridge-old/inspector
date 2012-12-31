@@ -26,12 +26,16 @@ object Blog extends Controller {
 
   Location.set("Blog")
 
-  def list = Action {
+  def list = page("1")
+
+  def page(pageNumStr: String)= Action {
     request =>
       request.session.get("username").map {
         user =>
-          val posts = postModel.getLatest(1)
-          Ok(views.html.admin.blog.list(posts, user))
+          val pageNum = pageNumStr.toInt
+          val posts = postModel.getLatest(pageNum)
+          val pageCount = postModel.getPageCount
+          Ok(views.html.admin.blog.list(posts, user, pageNum, pageCount))
       }.getOrElse {
         Unauthorized("Oops, you are not connected")
       }
@@ -47,12 +51,12 @@ object Blog extends Controller {
       }
   }
 
-  def edit(slug: String) = Action {
+  def edit(id: String) = Action {
     request =>
       request.session.get("username").map {
         user =>
 
-          val blogPostOption = postModel.getPost(slug)
+          val blogPostOption = postModel.getPostById(id.toInt)
 
           blogPostOption match {
             case Some(blogPost) => {
