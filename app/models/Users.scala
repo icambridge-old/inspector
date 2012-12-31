@@ -7,8 +7,9 @@ class Users extends Connection {
 
   def authenticate(username: String, password: String) = {
 
-    val user = queryEvaluator.selectOne("SELECT * FROM `users` WHERE username = ?", username) { row =>
-      new User(row.getString("username"), row.getString("password"))
+    val user = queryEvaluator.selectOne("SELECT * FROM `users` WHERE username = ?", username) {
+      row =>
+        new User(row.getString("username"), row.getString("password"))
     }
 
     val authenticated = user match {

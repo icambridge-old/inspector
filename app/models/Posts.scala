@@ -19,48 +19,55 @@ class Posts extends Connection {
     val startingPoint = limitCount * (pageNumber - 1)
 
     val posts: Seq[Post] = queryEvaluator.select(
-          "SELECT SQL_CALC_FOUND_ROWS * FROM posts ORDER BY `id` DESC LIMIT "+startingPoint+","+limitCount) { row =>
+      "SELECT SQL_CALC_FOUND_ROWS * FROM posts ORDER BY `id` DESC LIMIT " + startingPoint + "," + limitCount) {
+      row =>
 
-      val format       = new SimpleDateFormat("dd-MM-yyyy")
-      val date         = row.getTimestamp("posted")
-      val formatedDate = format.format(date)
+        val format = new SimpleDateFormat("dd-MM-yyyy")
+        val date = row.getTimestamp("posted")
+        val formatedDate = format.format(date)
 
-      new Post(
-        title = row.getString("title"),
-        body = row.getString("body"),
-        excerpt = Some(row.getString("excerpt")),
-        posted = Some(formatedDate),
-        slug = row.getString("slug"),
-        id = Some(row.getInt("id"))
-      )
+        new Post(
+          title = row.getString("title"),
+          body = row.getString("body"),
+          excerpt = Some(row.getString("excerpt")),
+          posted = Some(formatedDate),
+          slug = row.getString("slug"),
+          id = Some(row.getInt("id"))
+        )
     }
 
-    val pageCountOption = queryEvaluator.selectOne("SELECT FOUND_ROWS()") { row =>
-      row.getInt(1)
+    val pageCountOption = queryEvaluator.selectOne("SELECT FOUND_ROWS()") {
+      row =>
+        row.getInt(1)
     }
 
-    val  postCount = pageCountOption.getOrElse(1)
-    pageCount = if ((postCount % limitCount) == 0) { postCount / limitCount } else { (postCount / limitCount) + 1 }
+    val postCount = pageCountOption.getOrElse(1)
+    pageCount = if ((postCount % limitCount) == 0) {
+      postCount / limitCount
+    } else {
+      (postCount / limitCount) + 1
+    }
 
     posts
   }
 
 
   def getPost(slug: String) = {
-    val post = queryEvaluator.selectOne("SELECT * FROM posts WHERE slug = ? ORDER BY `id` DESC", slug) { row =>
+    val post = queryEvaluator.selectOne("SELECT * FROM posts WHERE slug = ? ORDER BY `id` DESC", slug) {
+      row =>
 
-      val format       = new SimpleDateFormat("dd-MM-yyyy")
-      val date         = row.getTimestamp("posted")
-      val formatedDate = format.format(date)
+        val format = new SimpleDateFormat("dd-MM-yyyy")
+        val date = row.getTimestamp("posted")
+        val formatedDate = format.format(date)
 
-      new Post(
-        title = row.getString("title"),
-        body = row.getString("body"),
-        excerpt = Some(row.getString("excerpt")),
-        posted = Some(formatedDate),
-        slug = row.getString("slug"),
-        id = Some(row.getInt("id"))
-      )
+        new Post(
+          title = row.getString("title"),
+          body = row.getString("body"),
+          excerpt = Some(row.getString("excerpt")),
+          posted = Some(formatedDate),
+          slug = row.getString("slug"),
+          id = Some(row.getInt("id"))
+        )
     }
 
 
@@ -82,18 +89,15 @@ class Posts extends Connection {
     val slug = regex.replaceAllIn(post.title, "-").toLowerCase
     val title = post.title
 
-     post.id match {
-       case Some(id) => update(title, body, excerpt, slug, id)
-       case None => create(title, body, excerpt, slug)
-     }
+    post.id match {
+      case Some(id) => update(title, body, excerpt, slug, id)
+      case None => create(title, body, excerpt, slug)
+    }
 
 
   }
 
   def update(title: String, body: String, excerpt: String, slug: String, id: Int) = {
-
-
-
 
     queryEvaluator.execute("UPDATE posts SET title=?, body=?, excerpt=?, slug=? WHERE id = ?",
       title, body, excerpt, slug, id)
@@ -103,7 +107,7 @@ class Posts extends Connection {
   def create(title: String, body: String, excerpt: String, slug: String) = {
 
     queryEvaluator.execute("INSERT INTO posts (title, body, excerpt, slug) VALUES (?, ?, ?,  ?)",
-                           title, body, excerpt, slug)
+      title, body, excerpt, slug)
   }
 
 }

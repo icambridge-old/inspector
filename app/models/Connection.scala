@@ -15,12 +15,12 @@ trait Connection {
 
   val config = new com.twitter.querulous.config.QueryEvaluator {
     database.pool = new ApachePoolingDatabase {
-      sizeMin          = 1
-      sizeMax          = 1
-      maxWait          = 5.seconds
+      sizeMin = 1
+      sizeMax = 1
+      maxWait = 5.seconds
       minEvictableIdle = 60.seconds
-      testIdle         = 1.second
-      testOnBorrow     = false
+      testIdle = 1.second
+      testOnBorrow = false
     }
   }
 

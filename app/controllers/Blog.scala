@@ -30,11 +30,12 @@ object Blog extends Controller {
   def index = page("1")
 
 
-  def page(pageNumStr: String) = Action { request =>
-    val pageNum: Int = pageNumStr.toInt
-    val posts = postModel.getLatest(pageNum)
-    val postCount = postModel.getPageCount
-    Ok(views.html.blog.index(posts, pageNum,postCount))
+  def page(pageNumStr: String) = Action {
+    request =>
+      val pageNum: Int = pageNumStr.toInt
+      val posts = postModel.getLatest(pageNum)
+      val postCount = postModel.getPageCount
+      Ok(views.html.blog.index(posts, pageNum, postCount))
   }
 
   def post(slug: String) = Action {

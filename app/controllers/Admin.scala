@@ -17,48 +17,56 @@ object Admin extends Controller {
     mapping(
       "username" -> nonEmptyText,
       "password" -> nonEmptyText
-    )(User.apply)(User.unapply) )
+    )(User.apply)(User.unapply))
 
   val userLoginForm = Form(
     tuple(
       "username" -> text,
       "password" -> text
-    ) verifying ("Invalid username or password", result => result match {
+    ) verifying("Invalid username or password", result => result match {
       case (username, password) => userModel.authenticate(username, password)
     })
   )
 
 
-
-  def index = Action { request =>
-    request.session.get("username").map { user =>
-      Ok(views.html.admin.index("Admin index", user))
-    }.getOrElse {
-      Unauthorized("Oops, you are not connected")
-    }
+  def index = Action {
+    request =>
+      request.session.get("username").map {
+        user =>
+          Ok(views.html.admin.index("Admin index", user))
+      }.getOrElse {
+        Unauthorized("Oops, you are not connected")
+      }
   }
 
-  def create = Action { request =>
-    request.session.get("username").map { user =>
-      Ok(views.html.admin.user.create(userCreateForm, user))
-    }.getOrElse {
-      Unauthorized("Oops, you are not connected")
-    }
+  def create = Action {
+    request =>
+      request.session.get("username").map {
+        user =>
+          Ok(views.html.admin.user.create(userCreateForm, user))
+      }.getOrElse {
+        Unauthorized("Oops, you are not connected")
+      }
   }
 
-  def save = Action { implicit request =>
-    request.session.get("username").map { user =>
+  def save = Action {
+    implicit request =>
+      request.session.get("username").map {
+        user =>
 
-      val result = userCreateForm.bindFromRequest.fold(
-    {formFail => Ok(views.html.admin.user.create(formFail, user))},
-    {user => userModel.save(user);Ok(views.html.index("Success")) }
-    )
+          val result = userCreateForm.bindFromRequest.fold(
+          {
+            formFail => Ok(views.html.admin.user.create(formFail, user))
+          }, {
+            user => userModel.save(user); Ok(views.html.index("Success"))
+          }
+          )
 
-    result
+          result
 
-  }.getOrElse {
-    Unauthorized("Oops, you are not connected")
-  }
+      }.getOrElse {
+        Unauthorized("Oops, you are not connected")
+      }
   }
 
   def login = Action {
@@ -68,8 +76,11 @@ object Admin extends Controller {
   def process = Action {
     implicit request =>
       val result = userLoginForm.bindFromRequest.fold(
-      {formFail => Ok(views.html.admin.user.login(formFail))},
-      {user => Redirect(routes.Admin.index).withSession("username" -> user._1) }
+      {
+        formFail => Ok(views.html.admin.user.login(formFail))
+      }, {
+        user => Redirect(routes.Admin.index).withSession("username" -> user._1)
+      }
       )
 
       result

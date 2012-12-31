@@ -6,25 +6,27 @@ import entities.Page
 class Pages extends Connection {
 
   def getPage(pageSlug: String) = {
-    val page = queryEvaluator.selectOne("SELECT * FROM `pages` WHERE slug = ?", pageSlug) { row =>
-      new Page(
-        title = row.getString("title"),
-        body = row.getString("body"),
-        slug = row.getString("slug"),
-        id = Some(row.getInt("id"))
-      )
+    val page = queryEvaluator.selectOne("SELECT * FROM `pages` WHERE slug = ?", pageSlug) {
+      row =>
+        new Page(
+          title = row.getString("title"),
+          body = row.getString("body"),
+          slug = row.getString("slug"),
+          id = Some(row.getInt("id"))
+        )
     }
     page
   }
 
   def getAll = {
-    val pages = queryEvaluator.select("SELECT * FROM `pages` ORDER BY `id` DESC") { row =>
-      new Page(
-        title = row.getString("title"),
-        body = row.getString("body"),
-        slug = row.getString("slug"),
-        id = Some(row.getInt("id"))
-      )
+    val pages = queryEvaluator.select("SELECT * FROM `pages` ORDER BY `id` DESC") {
+      row =>
+        new Page(
+          title = row.getString("title"),
+          body = row.getString("body"),
+          slug = row.getString("slug"),
+          id = Some(row.getInt("id"))
+        )
     }
     pages
   }
@@ -52,7 +54,7 @@ class Pages extends Connection {
   def create(title: String, body: String, slug: String) = {
 
     queryEvaluator.execute("INSERT INTO `pages` (title, body, slug) VALUES (?, ?,  ?)",
-      title, body,  slug)
+      title, body, slug)
   }
 
 }
