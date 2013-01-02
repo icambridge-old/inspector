@@ -80,8 +80,8 @@ object Blog extends Controller {
           val result = postForm.bindFromRequest.fold(
           {
             formFail => Ok(views.html.admin.blog.edit(formFail, user))
-          }, {
-            post => postModel.save(post); Ok(views.html.blog.post(post))
+          }, {                                        // TODO change this to something adminy
+            post => postModel.save(post); Ok(views.html.blog.view(post))
           }
           )
 

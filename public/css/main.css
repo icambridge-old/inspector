@@ -1,0 +1,31 @@
+.col-search {
+    display: inline-block;
+}
+
+.col-search label {
+    display : block;
+}
+
+.flight .airline {
+    width: 150px;
+    display: inline-block;
+}
+
+.flight .flight_info {
+    display: inline-block;
+}
+
+.flight_info_spec {
+    display: inline-block;
+    padding: 5px;
+}
+
+.flight_info_spec label {
+    width: 100px;
+    display: inline;
+
+}
+
+.flight_info_spec span {
+    display: inline-block;
+}

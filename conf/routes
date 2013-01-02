@@ -8,7 +8,7 @@ GET     /                           controllers.Application.index
 # Blog
 GET     /blog                       controllers.Blog.index
 GET     /blog/page/:pageNum         controllers.Blog.page(pageNum)
-GET     /blog/view/:slug            controllers.Blog.post(slug)
+GET     /blog/view/:slug            controllers.Blog.view(slug)
 # Admin Blog
 GET     /admin/blog                 controllers.backend.Blog.list
 GET     /admin/blog/page/:pageNum   controllers.backend.Blog.page(pageNum)

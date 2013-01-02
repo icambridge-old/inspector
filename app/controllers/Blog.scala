@@ -38,12 +38,12 @@ object Blog extends Controller {
       Ok(views.html.blog.index(posts, pageNum, pageCount))
   }
 
-  def post(slug: String) = Action {
+  def view(slug: String) = Action {
 
     val blogPostOption = postModel.getPost(slug)
 
     blogPostOption match {
-      case Some(blogPost) => Ok(views.html.blog.post(blogPost))
+      case Some(blogPost) => Ok(views.html.blog.view(blogPost))
       case None => Ok(views.html.blog.notfound())
     }
 

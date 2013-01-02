@@ -98,7 +98,7 @@ class Posts extends Connection {
 
   def save(post: Post) = {
 
-    val regex = "[^A-Za-z0-9\\s-]".r
+    val regex = "[^A-Za-z0-9-]".r
     val body = post.body
 
     val excerpt = post.excerpt match {
