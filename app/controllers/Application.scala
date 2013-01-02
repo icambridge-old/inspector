@@ -9,7 +9,7 @@ object Application extends Controller {
 
   def index = Action {
     Location.set("Home")
-    Ok(views.html.index("Your new application is ready!"))
+    Ok(views.html.index("Iain Cambridge"))
   }
 
 }
