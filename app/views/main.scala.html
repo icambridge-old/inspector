@@ -18,14 +18,16 @@
     <div class="wrapper">
 
         <div id="logo">
-            <img src="@routes.Assets.at("images/name2.png")" width="213" height="49" alt="your name" class="png"/>
+            <img src="@routes.Assets.at("images/small.png")"  alt="Iain Cambridge" class="png"/>
         </div>
 
         <div id="right">
-            <form method="get" id="searchform" action="#">
+            <form method="get" action="http://www.google.com/search" id="searchform">
+
                 <fieldset class="search">
-                    <input type="text" class="box" />
-                    <button class="btn" title="Search">Search</button>
+                    <input type="search" placeholder="Search on Google" name="q" results="10">
+                    <input type="hidden" name="sitesearch" value="blog.icambridge.me">
+                    <button class="btn" type="submit">
                 </fieldset>
             </form>
         </div>
@@ -36,12 +38,8 @@
 <div id="contentpart">								<!-- Start of Content Part !-->
     <div class="wrapper">
 
-        <ul class="menu">							<!-- This is the menu !-->
-            <li><a href="index.html">Home</a></li>
-            <li @if(Location.isCurrentPage("Blog")) { class="current" }><a href="@routes.Blog.index">Blog</a></li>
-            <li @if(Location.isCurrentPage("About")) { class="current" }><a href="@routes.Page.page("about")">About</a></li>
-            <li @if(Location.isCurrentPage("Contact")) { class="current" }><a href="contact.html">Contact</a></li>
-        </ul>
+
+        @partial.menu()
 
         <div id="content">
 
@@ -49,21 +47,24 @@
                 @content
             </div>								<!-- End Main Content !-->
 
-            <div id="sidebar">					<!-- Start of Sidebar !-->
-                <ul class="sidemenu">
-                    <li><a href="#">Overview</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Archive</a></li>
-                    <li><a href="#">News Feeds</a></li>
-                </ul>
-            </div>								<!-- End of Sidebar !-->
+        <div id="sidebar">				<!-- Start of Sidebar !-->
+            <div class="title"><h2>Iain Cambridge</h2></div>
+
+            <p>A Scottish PHP Web Developer based in England. Writing code for fun and profit.</p><br />
+
+            <h3>Networks</h3>
+            <ul>
+                <li><a href="http://github.com/icambridge">Github</a> &mdash; Look at my code</li>
+                <li><a href="http://twitter.com/ircambridge">Twitter</a> &mdash; Read my retweets</li>
+            </ul>
+        </div>								<!-- End of Sidebar !-->
 
         </div>
 
         <div style="clear:both;"></div>
 
         <div id="bottom">					<!-- This is the Footer !-->
-            <p class="footer">Copyright © 2012 Iain Cambridge. All Rights Reserved.</p>
+            <p class="footer">Copyright © 2013 Iain Cambridge. All Rights Reserved.</p>
         </div>
 
     </div>

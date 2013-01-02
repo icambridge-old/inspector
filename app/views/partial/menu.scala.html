@@ -1,0 +1,8 @@
+
+@import util.Location
+<ul class="menu">							<!-- This is the menu !-->
+    <li @if(Location.isCurrentPage("Home")) { class="current" }><a href="@routes.Application.index">Home</a></li>
+    <li @if(Location.isCurrentPage("Blog")) { class="current" }><a href="@routes.Blog.index">Blog</a></li>
+    <li @if(Location.isCurrentPage("About")) { class="current" }><a href="@routes.Page.page("about")">About</a></li>
+    <li @if(Location.isCurrentPage("Contact")) { class="current" }><a href="@routes.Page.page("contact")">Contact</a></li>
+</ul>

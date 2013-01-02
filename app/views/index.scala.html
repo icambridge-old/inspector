@@ -1,7 +1,62 @@
-@(message: String)
+@(title: String)
+<!DOCTYPE html>
 
-@main("Welcome to Play 2.0") {
-    
-   <p>@message</p>
-    
-}
+<html>
+<head>
+    <title>@title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="@routes.Assets.at("css/reset.css")" type="text/css" />
+    <link rel="stylesheet" href="@routes.Assets.at("css/default.css")" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script src="@routes.Assets.at("js/jquery-1.5.2.min.js")" type="text/javascript" charset="utf-8"></script>
+
+    </head>
+<body id="index">
+<div id="bigheader">						<!-- Start of Header Part !-->
+    <div class="wrapper">
+
+        <div id="logocenter">
+            <img src="@routes.Assets.at("images/main.png")" alt="Iain Cambridge" class="png"/>
+            <div class="myname">Iain Cambridge</div>
+        </div>
+
+        <div style="clear:both;"></div>
+
+    </div>
+</div>										<!-- End of Header Part !-->
+
+<div id="contentpart">						<!-- Start of Content Part !-->
+    <div class="wrapper">
+
+
+        @partial.menu()
+
+        <div id="content">
+
+            <div id="column1">
+                <h2>Who am I?</h2>
+                <p class="home"><img src="@routes.Assets.at("images/icons/Picture.png")" alt="example" width="48" height="48" class="simple" />A web developer who writes code for fun and profit.</p>
+            </div>
+
+            <div id="column2">
+                <h2>My Mission</h2>
+                <p class="home"><img src="@routes.Assets.at("images/icons/Modify.png")" alt="example" width="48" height="48" class="simple"/>To try and understand what it truly means to write good software. I am always trying to better myself by learning new things. I try to when possible share what I've learned</p>
+            </div>
+
+            <div id="column3">
+                <h2>Contact</h2>
+                <p class="home"><img src="@routes.Assets.at("images/icons/Comment.png")" alt="example" width="48" height="48" class="simple" />If you want to contact me for whatever reason you can. I'll always try and respond. (I also plan on replacing this column with something better)</p>
+            </div>
+
+        </div>
+
+        <div style="clear:both;"></div>
+
+        <div id="bottom"					><!-- This is the Footer !-->
+            <p class="footer">Copyright © 2013 Iain Cambridge. All Rights Reserved.</p>
+        </div>
+
+    </div>
+</div>										<!-- End of Content Part !-->
+</body>
+</html>
