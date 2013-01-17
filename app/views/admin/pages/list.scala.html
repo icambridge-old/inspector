@@ -1,12 +1,21 @@
 @(pages: Seq[entities.Page], username: String)
 
-@admin.main("Latest Pages", username) {
-
-    @pages.map { page =>
-
-        <h2>@page.title</h2>
-        @page.body
+@admin.main("Latest posts", username) {
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    @pages.map { post =>
+    <tr>
+        <td>@post.id</td>
+        <td><a href="@controllers.backend.routes.Page.edit(post.slug)">@post.title</a></td>
+    </tr>
 
     }
-
+    </tbody>
+</table>
 }

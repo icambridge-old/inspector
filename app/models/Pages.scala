@@ -19,7 +19,7 @@ class Pages extends Connection {
   }
 
   def getAll = {
-    val pages = queryEvaluator.select("SELECT * FROM `pages` ORDER BY `id` DESC") {
+    val pages = queryEvaluator.select("SELECT   * FROM `pages` ORDER BY `id` DESC") {
       row =>
         new Page(
           title = row.getString("title"),
